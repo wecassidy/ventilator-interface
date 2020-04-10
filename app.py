@@ -92,9 +92,9 @@ if __name__ == "__main__":
     #     rotator.make_listbox_rotator(rotary.Direction.CCW),
     # )
     up = g0.Button(14, bounce_time=0.05)
-    up.when_pressed = rotator.make_listbox_rotator(rotary.Direction.CW)
+    up.when_pressed = rotator.make_listbox_rotator(rotary.Direction.CCW)
     down = g0.Button(4, bounce_time=0.05)
-    down.when_pressed = rotator.make_listbox_rotator(rotary.Direction.CCW)
+    down.when_pressed = rotator.make_listbox_rotator(rotary.Direction.CW)
     click = g0.Button(2, bounce_time=0.05)
 
     Gtk.main()
