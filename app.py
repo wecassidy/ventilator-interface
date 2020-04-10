@@ -61,7 +61,7 @@ def make_property_sender(ser):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Must provide serial port as command line argument")
+        raise RuntimeError("Must provide serial port as command line argument")
 
     # Connect to serial
     ser = serial.Serial(sys.argv[1], baudrate=115200)
