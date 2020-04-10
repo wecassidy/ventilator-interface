@@ -40,5 +40,8 @@ class RotaryEncoder:
 class Direction(enum.Enum):
     CW = enum.auto()
     CLOCKWISE = CW
+    DOWN = CW
+
     CCW = enum.auto()
     COUNTERCLOCKWISE = CCW
+    UP = CCW

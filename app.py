@@ -20,18 +20,15 @@ class ListboxRotator:
         self.box.unselect_all()
         self.box.select_row(self.box.get_row_at_index(self.index))
 
-    def make_listbox_rotator(self, direction):
-        def rotate():
-            if (
-                direction == rotary.Direction.CW
-                and self.index < len(self.box.get_children()) - 1
-            ):
-                self.index += 1
-            elif direction == rotary.Direction.CCW and self.index > 0:
-                self.index -= 1
-            self.select_index()
-
-        return rotate
+    def rotate(self, direction):
+        if (
+            direction == rotary.Direction.DOWN
+            and self.index < len(self.box.get_children()) - 1
+        ):
+            self.index += 1
+        elif direction == rotary.Direction.UP and self.index > 0:
+            self.index -= 1
+        self.select_index()
 
 
 def make_start_clicker(ser):
@@ -60,6 +57,39 @@ def make_property_sender(ser):
     return send_new_property
 
 
+class AppState:
+    def __init__(self, listbox, propertySender, startClicker):
+        self.box = listbox
+        self.rotator = ListboxRotator(self.box)
+        self.inSpinner = False
+        self.sender = propertySender
+        self.starter = startClicker
+
+    def on_click(self):
+        if self.inSpinner:
+            self.sender(self.get_active_control())
+            self.inSpinner = False
+        elif self.box.get_selected_row() == self.box.get_last_child():
+            self.starter(self.get_active_control())
+        else:
+            self.inSpinner = True
+
+    def on_up(self):
+        if self.inSpinner:
+            self.get_active_control().spin(Gtk.SpinType.STEP_FORWARD)
+        else:
+            self.rotator.rotate(rotary.Direction.UP)
+
+    def on_down(self):
+        if self.inSpinner:
+            self.get_active_control().spin(Gtk.SpinType.STEP_BACKWARD)
+        else:
+            self.rotator.rotate(rotary.Direction.DOWN)
+
+    def get_active_control(self):
+        return self.box.get_selected_row().get_last_child()
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         raise RuntimeError("Must provide serial port as command line argument")
@@ -73,7 +103,6 @@ if __name__ == "__main__":
     handlers = {
         "onDestroy": Gtk.main_quit,
         "onStartClick": make_start_clicker(ser),
-        "propertyChanged": make_property_sender(ser),
     }
     builder.connect_signals(handlers)
 
@@ -84,7 +113,7 @@ if __name__ == "__main__":
 
     # Connect GUI to rotary encoder
     listbox = builder.get_object("control_container")
-    rotator = ListboxRotator(listbox)
+    state = AppState(listbox, make_property_sender(ser), make_start_clicker(ser))
     # r = rotary.RotaryEncoder(
     #     14,
     #     4,
@@ -92,9 +121,10 @@ if __name__ == "__main__":
     #     rotator.make_listbox_rotator(rotary.Direction.CCW),
     # )
     up = g0.Button(14, bounce_time=0.05)
-    up.when_pressed = rotator.make_listbox_rotator(rotary.Direction.CCW)
+    up.when_pressed = state.on_up
     down = g0.Button(4, bounce_time=0.05)
-    down.when_pressed = rotator.make_listbox_rotator(rotary.Direction.CW)
+    down.when_pressed = state.on_down
     click = g0.Button(2, bounce_time=0.05)
+    click.when_pressed = state.on_click
 
     Gtk.main()

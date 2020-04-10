@@ -112,7 +112,6 @@
                                 <property name="input_purpose">number</property>
                                 <property name="adjustment">peep_adjustment</property>
                                 <property name="numeric">True</property>
-                                <signal name="value-changed" handler="propertyChanged" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -153,7 +152,6 @@
                                 <property name="input_purpose">number</property>
                                 <property name="adjustment">pip_adjustment</property>
                                 <property name="numeric">True</property>
-                                <signal name="value-changed" handler="propertyChanged" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -192,7 +190,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="adjustment">fio2_adjustment</property>
-                                <signal name="value-changed" handler="propertyChanged" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -233,7 +230,6 @@
                                 <property name="input_purpose">number</property>
                                 <property name="adjustment">f_adjustment</property>
                                 <property name="numeric">True</property>
-                                <signal name="value-changed" handler="propertyChanged" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -275,7 +271,6 @@
                                 <property name="adjustment">rise_adjustment</property>
                                 <property name="digits">1</property>
                                 <property name="numeric">True</property>
-                                <signal name="value-changed" handler="propertyChanged" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -334,7 +329,6 @@
                                     <property name="adjustment">ie_adjustment</property>
                                     <property name="snap_to_ticks">True</property>
                                     <property name="numeric">True</property>
-                                    <signal name="value-changed" handler="propertyChanged" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
