@@ -34,10 +34,10 @@ def start_clicked(widget):
     label = widget.get_label()
     if label == "Start":
         widget.set_label("Stop")
-        print("$STOP*")
+        print("$START*")
     else:
         widget.set_label("Start")
-        print("$START*")
+        print("$STOP*")
 
 
 def send_new_property(spinner):
