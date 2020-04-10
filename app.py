@@ -6,24 +6,28 @@ from gi.repository import Gtk
 import rotary
 
 
-def make_listbox_rotator(listbox, clockwise):
-    def rotate():
-        listbox.do_move_cursor(
-            Gtk.MovementStep.GTK_MOVEMENT_DISPLAY_LINES,
-            1 if rotary.Direction.CW else -1,
-        )
+class ListboxRotator:
+    def __init__(self, listbox):
+        self.box = listbox
+        self.index = 0
+        self.select_index()
 
-    return rotate
+    def select_index(self):
+        self.box.unselect_all()
+        self.box.select_row(self.box.get_row_at_index(self.index))
 
+    def make_listbox_rotator(self, direction):
+        def rotate():
+            if (
+                direction == rotary.Direction.CW
+                and self.index < len(self.box.get_children()) - 1
+            ):
+                self.index += 1
+            elif direction == rotary.Direction.CCW and self.index > 0:
+                self.index += 1
+            self.select_index()
 
-def value_up(builder, name):
-    widget = builder.get_object(name)
-    widget.do_value_changed(Gtk.ScrollType.STEP_UP)
-
-
-def value_down(builder, name):
-    widget = builder.get_object(name)
-    widget.do_value_changed(Gtk.ScrollType.STEP_DOWN)
+        return rotate
 
 
 def start_clicked(widget):
@@ -46,11 +50,12 @@ if __name__ == "__main__":
     window.fullscreen()
 
     listbox = builder.get_object("control_container")
+    rotator = ListboxRotator(listbox)
     r = rotary.RotaryEncoder(
         14,
         4,
-        make_listbox_rotator(listbox, rotary.Direction.CW),
-        make_listbox_rotator(listbox, rotary.Direction.CCW),
+        rotator.make_listbox_rotator(rotary.Direction.CW),
+        rotator.make_listbox_rotator(rotary.Direction.CCW),
     )
 
     Gtk.main()
