@@ -3,6 +3,18 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+import rotary
+
+
+def make_listbox_rotator(listbox, clockwise):
+    def rotate():
+        listbox.do_move_cursor(
+            Gtk.MovementStep.GTK_MOVEMENT_DISPLAY_LINES,
+            1 if rotary.Direction.CW else -1,
+        )
+
+    return rotate
+
 
 def value_up(builder, name):
     widget = builder.get_object(name)
@@ -32,5 +44,13 @@ if __name__ == "__main__":
     window.show_all()
     window.set_size_request(1920, 1080)
     window.fullscreen()
+
+    listbox = builder.get_object("control_container")
+    r = rotary.RotaryEncoder(
+        14,
+        4,
+        make_listbox_rotator(listbox, rotary.Direction.CW),
+        make_listbox_rotator(listbox, rotary.Direction.CCW),
+    )
 
     Gtk.main()

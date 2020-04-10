@@ -1,3 +1,5 @@
+import enum
+
 import gpiozero as g0
 
 
@@ -33,3 +35,10 @@ class RotaryEncoder:
             self.onCW()
         elif delta == 3:
             self.onCCW()
+
+
+class Direction(enum.Enum):
+    CW = enum.auto()
+    CLOCKWISE = CW
+    CCW = enum.auto()
+    COUNTERCLOCKWISE = CCW
