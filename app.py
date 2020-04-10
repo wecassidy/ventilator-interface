@@ -41,7 +41,7 @@ def start_clicked(widget):
 
 
 def send_new_property(spinner):
-    property = spinner.get_name().upper()
+    property = Gtk.Buildable.get_name(spinner).upper()
     if property == "RISE":
         value = spinner.get_value()
         print(f"${property},{value:.1f}*")
