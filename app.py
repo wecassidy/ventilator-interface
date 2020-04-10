@@ -38,6 +38,10 @@ def start_clicked(widget):
         widget.set_label("Start")
 
 
+def send_property(property, value):
+    print(f"${property.upper()},{value}*")
+
+
 if __name__ == "__main__":
     builder = Gtk.Builder()
     builder.add_from_file("layout.glade")
