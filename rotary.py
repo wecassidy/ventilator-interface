@@ -7,11 +7,11 @@ class RotaryEncoder:
     """Based on https://bobrathbone.com/raspberrypi/documents/Raspberry%20Rotary%20Encoders.pdf"""
 
     def __init__(self, pinA, pinB, cwCallback, ccwCallback):
-        self.btnA = g0.DigitalInputDevice(pinA, pull_up=False, bounce_time=0.01)
+        self.btnA = g0.DigitalInputDevice(pinA, pull_up=False, bounce_time=0.05)
         self.btnA.when_activated = self.on_turn
         self.btnA.when_deactivated = self.on_turn
 
-        self.btnB = g0.DigitalInputDevice(pinB, pull_up=False, bounce_time=0.01)
+        self.btnB = g0.DigitalInputDevice(pinB, pull_up=False, bounce_time=0.05)
         self.btnB.when_activated = self.on_turn
         self.btnB.when_deactivated = self.on_turn
 
