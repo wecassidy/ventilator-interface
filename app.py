@@ -20,6 +20,7 @@ if __name__ == "__main__":
 
     window = builder.get_object("main_window")
     window.show_all()
+    window.set_size_request(1920, 1080)
     window.fullscreen()
 
     Gtk.main()
