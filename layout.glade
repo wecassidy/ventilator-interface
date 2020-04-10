@@ -2,11 +2,17 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkWindow" id="main_window">
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="urgency_hint">True</property>
     <property name="decorated">False</property>
+    <signal name="destroy" handler="onDestroy" swapped="no"/>
     <child>
       <placeholder/>
     </child>
@@ -25,32 +31,10 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkLabel" id="header">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">label</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSpinButton">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
+                    <property name="label" translatable="yes">APVD</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -78,6 +62,9 @@
                       <object class="GtkSpinButton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="input_purpose">number</property>
+                        <property name="adjustment">adjustment1</property>
+                        <property name="numeric">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -112,6 +99,8 @@
                       <object class="GtkSpinButton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="input_purpose">number</property>
+                        <property name="numeric">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -146,6 +135,8 @@
                       <object class="GtkSpinButton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="input_purpose">number</property>
+                        <property name="numeric">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -180,6 +171,8 @@
                       <object class="GtkSpinButton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="input_purpose">number</property>
+                        <property name="numeric">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -214,6 +207,8 @@
                       <object class="GtkSpinButton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="input_purpose">number</property>
+                        <property name="numeric">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -226,6 +221,56 @@
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">label</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="input_purpose">number</property>
+                        <property name="numeric">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="start">
+                    <property name="label" translatable="yes">Start</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="onStartClick" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
               </object>
