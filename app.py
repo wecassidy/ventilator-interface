@@ -58,20 +58,19 @@ def make_property_sender(ser):
 
 
 class AppState:
-    def __init__(self, listbox, builder, propertySender, startClicker):
+    def __init__(self, listbox, builder, propertySender):
         self.box = listbox
         self.builder = builder
         self.rotator = ListboxRotator(self.box)
         self.inSpinner = False
         self.sender = propertySender
-        self.starter = startClicker
 
     def on_click(self):
         if self.inSpinner:
             self.sender(self.get_active_control())
             self.inSpinner = False
         elif self.box.get_selected_row() == self.box.get_children()[-1]:
-            self.starter(self.get_active_control())
+            self.builder.get_object("start").clicked()
         else:
             self.inSpinner = True
 
@@ -121,7 +120,7 @@ if __name__ == "__main__":
 
     # Connect GUI to rotary encoder
     listbox = builder.get_object("control_container")
-    state = AppState(listbox, builder, make_property_sender(ser), make_start_clicker(ser))
+    state = AppState(listbox, builder, make_property_sender(ser))
     # r = rotary.RotaryEncoder(
     #     14,
     #     4,
