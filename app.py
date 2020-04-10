@@ -1,5 +1,6 @@
 import sys
 
+import gpiozero as g0
 import serial
 import gi
 
@@ -84,11 +85,16 @@ if __name__ == "__main__":
     # Connect GUI to rotary encoder
     listbox = builder.get_object("control_container")
     rotator = ListboxRotator(listbox)
-    r = rotary.RotaryEncoder(
-        14,
-        4,
-        rotator.make_listbox_rotator(rotary.Direction.CW),
-        rotator.make_listbox_rotator(rotary.Direction.CCW),
-    )
+    # r = rotary.RotaryEncoder(
+    #     14,
+    #     4,
+    #     rotator.make_listbox_rotator(rotary.Direction.CW),
+    #     rotator.make_listbox_rotator(rotary.Direction.CCW),
+    # )
+    up = g0.Button(14, bounce_time=0.05)
+    up.when_pressed = rotator.make_listbox_rotator(rotary.Direction.CW)
+    down = g0.Button(4, bounce_time=0.05)
+    down.when_pressed = rotator.make_listbox_rotator(rotary.Direction.CCW)
+    click = g0.Button(2, bounce_time=0.05)
 
     Gtk.main()
