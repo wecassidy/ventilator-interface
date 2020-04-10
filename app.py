@@ -4,6 +4,16 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
+def value_up(builder, name):
+    widget = builder.get_object(name)
+    widget.do_value_changed(Gtk.ScrollType.STEP_UP)
+
+
+def value_down(builder, name):
+    widget = builder.get_object(name)
+    widget.do_value_changed(Gtk.ScrollType.STEP_DOWN)
+
+
 def start_clicked(widget):
     label = widget.get_label()
     if label == "Start":
