@@ -34,18 +34,30 @@ def start_clicked(widget):
     label = widget.get_label()
     if label == "Start":
         widget.set_label("Stop")
+        print("$STOP*")
     else:
         widget.set_label("Start")
+        print("$START*")
 
 
-def send_property(property, value):
-    print(f"${property.upper()},{value}*")
+def send_new_property(spinner):
+    property = spinner.get_name().upper()
+    if property == "RISE":
+        value = spinner.get_value()
+        print(f"${property},{value:.1f}*")
+    else:
+        value = spinner.get_value_as_int()
+        print(f"${property},{value}*")
 
 
 if __name__ == "__main__":
     builder = Gtk.Builder()
     builder.add_from_file("layout.glade")
-    handlers = {"onDestroy": Gtk.main_quit, "onStartClick": start_clicked}
+    handlers = {
+        "onDestroy": Gtk.main_quit,
+        "onStartClick": start_clicked,
+        "propertyChanged": send_new_property,
+    }
     builder.connect_signals(handlers)
 
     window = builder.get_object("main_window")
