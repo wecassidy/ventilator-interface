@@ -24,7 +24,7 @@ class ListboxRotator:
             ):
                 self.index += 1
             elif direction == rotary.Direction.CCW and self.index > 0:
-                self.index += 1
+                self.index -= 1
             self.select_index()
 
         return rotate
