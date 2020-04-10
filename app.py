@@ -58,8 +58,9 @@ def make_property_sender(ser):
 
 
 class AppState:
-    def __init__(self, listbox, propertySender, startClicker):
+    def __init__(self, listbox, builder, propertySender, startClicker):
         self.box = listbox
+        self.builder = builder
         self.rotator = ListboxRotator(self.box)
         self.inSpinner = False
         self.sender = propertySender
@@ -69,25 +70,32 @@ class AppState:
         if self.inSpinner:
             self.sender(self.get_active_control())
             self.inSpinner = False
-        elif self.box.get_selected_row() == self.box.get_last_child():
+        elif self.box.get_selected_row() == self.box.get_children()[-1]:
             self.starter(self.get_active_control())
         else:
             self.inSpinner = True
 
     def on_up(self):
         if self.inSpinner:
-            self.get_active_control().spin(Gtk.SpinType.STEP_FORWARD)
+            spinner = self.get_active_control()
+            spinner.spin(Gtk.SpinType.STEP_FORWARD, spinner.get_increments()[0])
         else:
             self.rotator.rotate(rotary.Direction.UP)
 
     def on_down(self):
         if self.inSpinner:
-            self.get_active_control().spin(Gtk.SpinType.STEP_BACKWARD)
+            spinner = self.get_active_control()
+            spinner.spin(Gtk.SpinType.STEP_BACKWARD, spinner.get_increments()[0])
         else:
             self.rotator.rotate(rotary.Direction.DOWN)
 
     def get_active_control(self):
-        return self.box.get_selected_row().get_last_child()
+        if self.rotator.index == len(self.box.get_children()) - 1:
+            return self.builder.get_object("start")
+        elif self.rotator.index == len(self.box.get_children()) - 2:
+            return self.builder.get_object("i/e")
+        else:
+            return self.box.get_selected_row().get_children()[0].get_children()[-1]
 
 
 if __name__ == "__main__":
@@ -113,7 +121,7 @@ if __name__ == "__main__":
 
     # Connect GUI to rotary encoder
     listbox = builder.get_object("control_container")
-    state = AppState(listbox, make_property_sender(ser), make_start_clicker(ser))
+    state = AppState(listbox, builder, make_property_sender(ser), make_start_clicker(ser))
     # r = rotary.RotaryEncoder(
     #     14,
     #     4,
